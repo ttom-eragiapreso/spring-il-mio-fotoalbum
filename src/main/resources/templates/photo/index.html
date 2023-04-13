@@ -6,14 +6,13 @@
 </head>
 <body>
     <th:block th:replace="~{fragments/fragments :: navbar(${keyword}, true)}"></th:block>
-<ul>
-    <li th:each="photo : ${photos}" th:text="${photo.title}"></li>
-</ul>
-    <div class="container">
+    <div class="container py-3">
         <div class="row">
             <div class="col" th:each="photo : ${photos}">
                 <div class="card">
-                    <img th:src="${photo.url}" class="card-img-top" th:alt="${photo.title}">
+                    <a th:href="@{|/photo/${photo.id}|}">
+                        <img th:src="${photo.url}" class="card-img-top" th:alt="${photo.title}">
+                    </a>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${photo.title}"></h5>
                         <p class="card-text" th:text="${photo.description}"></p>
@@ -30,8 +29,5 @@
             </div>
         </div>
     </div>
-
-
-
 </body>
 </html>
