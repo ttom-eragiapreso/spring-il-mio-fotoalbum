@@ -72,5 +72,10 @@ public class PhotoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/create")
+    public String create(Model model){
+        model.addAttribute("photo", new Photo());
+        return "/photo/edit";
+    }
 
 }
