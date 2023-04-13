@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:replace="~{fragments/fragments :: head}"></th:block>
     <title>Your Photo Gallery</title>
 </head>
 <body>
-    <h1>Ciao</h1>
-
+    <th:block th:replace="~{fragments/fragments :: navbar(${keyword}, true)}"></th:block>
 <ul>
     <li th:each="photo : ${photos}" th:text="${photo.title}"></li>
 </ul>
+    <div class="container">
+        <div class="row">
+            <div class="col" th:each="photo : ${photos}">
+                <div class="card">
+                    <img th:src="${photo.url}" class="card-img-top" th:alt="${photo.title}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${photo.title}"></h5>
+                        <p class="card-text" th:text="${photo.description}"></p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item" th:each="category : ${photo.categories}"
+                            th:text="${category.name}"></li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </body>
 </html>
