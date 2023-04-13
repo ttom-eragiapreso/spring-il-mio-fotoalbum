@@ -26,7 +26,7 @@ public class Photo {
     private String url;
 
     @Column(columnDefinition = "boolean default true")
-    private Boolean isVisible;
+    private Boolean visible;
 
     @ManyToMany
     private List<Category> categories;
@@ -64,11 +64,11 @@ public class Photo {
     }
 
     public Boolean getVisible() {
-        return isVisible;
+        return visible;
     }
 
     public void setVisible(Boolean visible) {
-        isVisible = visible;
+        this.visible = visible;
     }
 
     public List<Category> getCategories() {

@@ -22,8 +22,9 @@
                             th:text="${category.name}"></li>
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <a th:href="@{|/photo/delete/${photo.id}|}" class="card-link text-danger">Delete
+                            Photo</a>
+                        <a th:href="@{|/photo/edit/${photo.id}|}" class="card-link">Edit Photo</a>
                     </div>
                 </div>
             </div>

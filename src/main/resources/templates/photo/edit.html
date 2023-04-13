@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{fragments/fragments :: head}"></th:block>
+  <title>Edit Photo</title>
+</head>
+<body>
+<th:block th:replace="~{fragments/fragments :: navbar(${keyword}, false)}"></th:block>
+
+<div class="container">
+  <form
+          th:action="@{|/photo/edit/${photo.id}|}"
+          method="post"
+          th:object="${photo}"
+  >
+    <ul th:if="${#fields.hasErrors()}">
+      <li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li>
+    </ul>
+    <div class="mb-3">
+      <label for="title" class="form-label">Photo Title</label>
+      <input type="text" class="form-control" id="title" th:field="*{title}">
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Photo Description</label>
+      <input type="text" class="form-control" id="description" th:field="*{description}">
+    </div>
+    <div class="mb-3">
+      <label for="url" class="form-label">Photo Url</label>
+      <input type="text" class="form-control" id="url" th:field="*{url}">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="isVisible"
+             th:checked="*{visible}" th:field="*{visible}">
+      <label class="form-check-label" for="isVisible">Visible?</label>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+</body>
+</html>

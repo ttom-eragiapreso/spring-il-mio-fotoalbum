@@ -1,8 +1,8 @@
-INSERT INTO db_photoalbum.photos (description, is_visible, title, url) VALUES('Description 1', 1, 'Photo 1','https://picsum.photos/200');
-INSERT INTO db_photoalbum.photos (description, is_visible, title, url) VALUES('Description 2', 1, 'Photo 2','https://picsum.photos/200');
-INSERT INTO db_photoalbum.photos (description, is_visible, title, url) VALUES('Description 3', 1, 'Photo 3','https://picsum.photos/200');
-INSERT INTO db_photoalbum.photos (description, is_visible, title, url) VALUES('Description 4', 1, 'Photo 4','https://picsum.photos/200');
-INSERT INTO db_photoalbum.photos (description, is_visible, title, url) VALUES('Description 5', 1, 'Photo 5','https://picsum.photos/200');
+INSERT INTO db_photoalbum.photos (description, visible, title, url) VALUES('Description 1', 1, 'Photo 1','https://picsum.photos/200');
+INSERT INTO db_photoalbum.photos (description, visible, title, url) VALUES('Description 2', 1, 'Photo 2','https://picsum.photos/200');
+INSERT INTO db_photoalbum.photos (description, visible, title, url) VALUES('Description 3', 1, 'Photo 3','https://picsum.photos/200');
+INSERT INTO db_photoalbum.photos (description, visible, title, url) VALUES('Description 4', 1, 'Photo 4','https://picsum.photos/200');
+INSERT INTO db_photoalbum.photos (description, visible, title, url) VALUES('Description 5', 1, 'Photo 5','https://picsum.photos/200');
 
 INSERT INTO db_photoalbum.categories (name) VALUES('Category 1');
 INSERT INTO db_photoalbum.categories (name) VALUES('Category 2');

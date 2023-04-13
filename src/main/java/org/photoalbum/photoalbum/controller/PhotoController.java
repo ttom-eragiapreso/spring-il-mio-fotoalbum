@@ -1,5 +1,6 @@
 package org.photoalbum.photoalbum.controller;
 
+import jakarta.validation.Valid;
 import org.photoalbum.photoalbum.exception.PhotoNotFoundException;
 import org.photoalbum.photoalbum.model.Photo;
 import org.photoalbum.photoalbum.service.PhotoService;
@@ -7,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -31,7 +30,6 @@ public class PhotoController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model){
-
         try {
            Photo photo = photoService.getById(id);
            model.addAttribute("photo", photo);
@@ -40,4 +38,39 @@ public class PhotoController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id){
+        try {
+            photoService.deletePhoto(id);
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return "redirect:/photo";
+    }
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model){
+
+        try {
+            Photo photoToEdit = photoService.getById(id);
+            model.addAttribute("photo", photoToEdit);
+            return "/photo/edit";
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute Photo photo, BindingResult bindingResult){
+
+        if(bindingResult.hasErrors()) return "/photo/edit";
+
+        try {
+            photoService.updatePhoto(photo, id);
+            return "redirect:/photo";
+        } catch (PhotoNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
