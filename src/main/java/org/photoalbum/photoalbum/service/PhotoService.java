@@ -30,7 +30,7 @@ public class PhotoService {
         photoRepository.delete(photoToDelete);
     }
 
-    public void updatePhoto(Photo formPhoto, Integer id){
+    public Photo updatePhoto(Photo formPhoto, Integer id) throws PhotoNotFoundException{
         Photo photoToUpdate = getById(id);
 
         photoToUpdate.setVisible(formPhoto.getVisible());
@@ -39,7 +39,7 @@ public class PhotoService {
         photoToUpdate.setCategories(formPhoto.getCategories());
         photoToUpdate.setUrl(formPhoto.getUrl());
 
-        photoRepository.save(photoToUpdate);
+       return photoRepository.save(photoToUpdate);
     }
 
     public Photo storePhoto(Photo formPhoto){
