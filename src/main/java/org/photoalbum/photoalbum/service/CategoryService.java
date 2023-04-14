@@ -1,5 +1,6 @@
 package org.photoalbum.photoalbum.service;
 
+import org.photoalbum.photoalbum.exception.CategoryNotFoundException;
 import org.photoalbum.photoalbum.model.Category;
 import org.photoalbum.photoalbum.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,5 +16,15 @@ public class CategoryService {
 
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
+    }
+
+    public Category getById(Integer id){
+        return categoryRepository.findById(id).orElseThrow(() -> new CategoryNotFoundException("Category with Id " + id + " not found"));
+    }
+
+    public void deleteById(Integer id){
+        Category categoryToDelete = getById(id);
+
+        categoryRepository.delete(categoryToDelete);
     }
 }

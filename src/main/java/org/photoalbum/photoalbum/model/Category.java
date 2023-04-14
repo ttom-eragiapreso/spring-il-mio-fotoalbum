@@ -3,6 +3,10 @@ package org.photoalbum.photoalbum.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -16,6 +20,9 @@ public class Category {
     @NotEmpty
     @NotNull
     private String name;
+    @ManyToMany(mappedBy = "categories")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Photo> photos;
 
     public Integer getId() {
         return id;
