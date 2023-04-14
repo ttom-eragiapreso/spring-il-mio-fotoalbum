@@ -23,13 +23,13 @@ public class PhotoRestController {
 
     @GetMapping
     public List<Photo> getAllPhotos(@RequestParam(name = "q") Optional<String> keyword){
-        return photoService.getAll(keyword);
+        return photoService.getAllVisible(keyword);
     }
 
     @GetMapping("/{id}")
     public Photo getPhotoById(@PathVariable Integer id){
         try {
-           return photoService.getById(id);
+           return photoService.getByIdApi(id);
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -48,7 +48,7 @@ public class PhotoRestController {
                 "request, please check that you provide all mandatory fields.");
 
         try {
-            return photoService.updatePhoto(requestPhoto, id);
+            return photoService.updatePhotoApi(requestPhoto, id);
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Photo with Id: " + id + " not found");
         }

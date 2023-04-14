@@ -21,8 +21,17 @@ public class PhotoService {
         return photoRepository.findByTitleContainingIgnoreCase(keyword.get());
     }
 
+    public List<Photo> getAllVisible(Optional<String> keyword){
+        if(keyword.isEmpty()) return photoRepository.findByVisibleTrue();
+        return photoRepository.findByTitleContainingIgnoreCaseAndVisibleTrue(keyword.get());
+    }
+
     public Photo getById(Integer id) throws PhotoNotFoundException{
         return photoRepository.findById(id).orElseThrow(() -> new PhotoNotFoundException("Photo with id " + id + " not found"));
+    }
+
+    public Photo getByIdApi(Integer id) throws PhotoNotFoundException{
+        return photoRepository.findByIdAndVisibleTrue(id).orElseThrow(()-> new PhotoNotFoundException("Photo with id " + id + " not found"));
     }
 
     public void deletePhoto(Integer id) throws PhotoNotFoundException{
@@ -40,6 +49,17 @@ public class PhotoService {
         photoToUpdate.setUrl(formPhoto.getUrl());
 
        return photoRepository.save(photoToUpdate);
+    }
+
+    public Photo updatePhotoApi(Photo formPhoto, Integer id) throws PhotoNotFoundException{
+        Photo photoToUpdate = getById(id);
+
+        photoToUpdate.setTitle(formPhoto.getTitle());
+        photoToUpdate.setDescription(formPhoto.getDescription());
+        photoToUpdate.setCategories(formPhoto.getCategories());
+        photoToUpdate.setUrl(formPhoto.getUrl());
+
+        return photoRepository.save(photoToUpdate);
     }
 
     public Photo storePhoto(Photo formPhoto){
