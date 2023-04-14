@@ -3,10 +3,12 @@ package org.photoalbum.photoalbum.controller;
 import jakarta.validation.Valid;
 import org.photoalbum.photoalbum.exception.PhotoNotFoundException;
 import org.photoalbum.photoalbum.model.Photo;
+import org.photoalbum.photoalbum.service.CategoryService;
 import org.photoalbum.photoalbum.service.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ public class PhotoController {
 
     @Autowired
     private PhotoService photoService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping
     public String index(Model model, @RequestParam(name = "q") Optional<String> keyword){
@@ -53,8 +57,9 @@ public class PhotoController {
 
         try {
             Photo photoToEdit = photoService.getById(id);
+            model.addAttribute("categories", categoryService.getAllCategories());
             model.addAttribute("photo", photoToEdit);
-            return "/photo/edit";
+            return "/photo/create-edit";
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
@@ -63,7 +68,7 @@ public class PhotoController {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id, @Valid @ModelAttribute Photo photo, BindingResult bindingResult){
 
-        if(bindingResult.hasErrors()) return "/photo/edit";
+        if(bindingResult.hasErrors()) return "/photo/create-edit";
 
         try {
             photoService.updatePhoto(photo, id);
@@ -74,8 +79,18 @@ public class PhotoController {
     }
     @GetMapping("/create")
     public String create(Model model){
+        model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("photo", new Photo());
-        return "/photo/edit";
+        return "/photo/create-edit";
+    }
+
+    @PostMapping("/create")
+    public String store(@Valid @ModelAttribute Photo formPhoto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()) return "/photo/create-edit";
+
+       Photo newPhoto = photoService.storePhoto(formPhoto);
+
+       return "redirect:/photo/" + newPhoto.getId();
     }
 
 }

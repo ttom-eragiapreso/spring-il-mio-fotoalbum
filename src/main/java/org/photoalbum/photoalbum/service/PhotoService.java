@@ -41,4 +41,16 @@ public class PhotoService {
 
         photoRepository.save(photoToUpdate);
     }
+
+    public Photo storePhoto(Photo formPhoto){
+        Photo photoToCreate = new Photo();
+
+        photoToCreate.setUrl(formPhoto.getUrl());
+        photoToCreate.setTitle(formPhoto.getTitle());
+        photoToCreate.setDescription(formPhoto.getDescription());
+        photoToCreate.setCategories(formPhoto.getCategories());
+        photoToCreate.setVisible(formPhoto.getVisible());
+
+        return photoRepository.save(photoToCreate);
+    }
 }
