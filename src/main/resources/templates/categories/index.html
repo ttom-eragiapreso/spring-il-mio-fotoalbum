@@ -8,18 +8,32 @@
 <th:block th:replace="~{fragments/fragments :: navbar(${keyword}, false)}"></th:block>
 
 
-<div class="container py-3">
-    <div class="row">
+<div class="container py-3"
+     th:with="formAction = ${category.id == null ? '/category/create' : '/category/edit/' + category.id}">
+    <div class="row mb-3">
         <div class="col" th:each="cat : ${categories}">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${cat.name}"></h5>
                     <a th:href="@{|/category/delete/${cat.id}|}" class="card-link text-danger">Delete</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <a th:href="@{|/category/edit/${cat.id}|}" class="card-link text-info">Edit</a>
                 </div>
             </div>
         </div>
     </div>
+    <form th:action="${formAction}" th:object="${category}" method="post">
+        <div class="mb-3">
+            <label for="name" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="name" th:field="*{name}" th:errorClass="is-invalid">
+            <div th:if="${#fields.hasErrors('name')}" class="invalid-feedback">
+                <ul>
+                    <li th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a th:href="@{/}" class="btn btn-info">Cancel</a>
+    </form>
 </div>
 </body>
 </html>

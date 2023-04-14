@@ -24,7 +24,12 @@ public class CategoryService {
 
     public void deleteById(Integer id){
         Category categoryToDelete = getById(id);
-
         categoryRepository.delete(categoryToDelete);
+    }
+
+    public void update(Integer id, Category formCategory){
+        Category categoryToUpdate = getById(id);
+        categoryToUpdate.setName(formCategory.getName());
+        categoryRepository.save(categoryToUpdate);
     }
 }
