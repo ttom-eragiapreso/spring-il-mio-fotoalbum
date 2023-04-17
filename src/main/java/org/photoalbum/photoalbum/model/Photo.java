@@ -1,5 +1,6 @@
 package org.photoalbum.photoalbum.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,6 +31,7 @@ public class Photo {
 
     @Lob
     @Column(length = 16777215)
+    @JsonIgnore
     private byte[] file;
 
     public Integer getId() {
