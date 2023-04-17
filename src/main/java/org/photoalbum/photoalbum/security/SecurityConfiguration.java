@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         @Bean
         SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests()
-                    .requestMatchers("/api/**").permitAll()
+                    .requestMatchers("/api/**", "/files/**").permitAll()
                     .requestMatchers("/**").hasAnyAuthority("ADMIN")
                             .and().logout()
                             .and().formLogin();

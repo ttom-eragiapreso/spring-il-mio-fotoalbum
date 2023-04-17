@@ -4,10 +4,6 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,8 +20,6 @@ public class Photo {
     private String title;
     private String description;
 
-    @NotNull
-    @NotEmpty
     private String url;
 
     @Column(columnDefinition = "boolean default true")
@@ -92,5 +86,10 @@ public class Photo {
 
     public void setFile(byte[] file) {
         this.file = file;
+    }
+
+    /*Custom methods*/
+    public String photoToggle(){
+        return file == null || file.length == 0 ? this.url : "/files/" + this.id;
     }
 }

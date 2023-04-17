@@ -25,7 +25,6 @@ public class UserMessageRestController {
     public ResponseEntity create(@Valid @RequestBody UserMessage formUserMessage, BindingResult bindingResult){
         if (bindingResult.hasErrors()) return new ResponseEntity<>(bindingResult.getAllErrors().stream().map(error -> error.getDefaultMessage()).collect(Collectors.toList()),
                 HttpStatus.BAD_REQUEST);
-            //throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(userMessageService.sendMessage(formUserMessage), HttpStatus.OK);
     }
 }

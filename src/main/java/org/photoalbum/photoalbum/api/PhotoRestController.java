@@ -1,6 +1,7 @@
 package org.photoalbum.photoalbum.api;
 
 import jakarta.validation.Valid;
+import org.photoalbum.photoalbum.dto.FileDTO;
 import org.photoalbum.photoalbum.exception.PhotoNotFoundException;
 import org.photoalbum.photoalbum.model.Photo;
 import org.photoalbum.photoalbum.service.PhotoService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +38,7 @@ public class PhotoRestController {
     }
 
     @PostMapping()
-    public Photo create(@Valid @RequestBody Photo requestPhoto, BindingResult bindingResult){
+    public Photo create(@Valid @RequestBody FileDTO requestPhoto, BindingResult bindingResult) throws IOException {
         if(bindingResult.hasErrors()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "There was something wrong in your " +
                 "request, please check that you provide all mandatory fields.");
         return photoService.storePhoto(requestPhoto);

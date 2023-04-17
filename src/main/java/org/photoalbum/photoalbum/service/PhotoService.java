@@ -49,11 +49,13 @@ public class PhotoService {
         photoToUpdate.setDescription(formPhoto.getDescription());
         photoToUpdate.setCategories(formPhoto.getCategories());
         photoToUpdate.setUrl(formPhoto.getUrl());
-        photoToUpdate.setFile(formPhoto.getMultipartFile().getBytes());
+        if(!formPhoto.getMultipartFile().isEmpty()) photoToUpdate.setFile(formPhoto.getMultipartFile().getBytes());
+
 
        return photoRepository.save(photoToUpdate);
     }
 
+    // In realtà metodo non necessario
     public Photo updatePhotoApi(Photo formPhoto, Integer id) throws PhotoNotFoundException{
         Photo photoToUpdate = getById(id);
 
@@ -65,7 +67,7 @@ public class PhotoService {
         return photoRepository.save(photoToUpdate);
     }
 
-    public Photo storePhoto(Photo formPhoto){
+    public Photo storePhoto(FileDTO formPhoto) throws IOException {
         Photo photoToCreate = new Photo();
 
         photoToCreate.setUrl(formPhoto.getUrl());
@@ -73,6 +75,8 @@ public class PhotoService {
         photoToCreate.setDescription(formPhoto.getDescription());
         photoToCreate.setCategories(formPhoto.getCategories());
         photoToCreate.setVisible(formPhoto.getVisible());
+        if(!formPhoto.getMultipartFile().isEmpty()) photoToCreate.setFile(formPhoto.getMultipartFile().getBytes());
+
 
         return photoRepository.save(photoToCreate);
     }

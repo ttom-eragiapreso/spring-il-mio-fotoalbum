@@ -44,4 +44,14 @@ public class CategoryController {
         categoryService.update(id, formCategory);
         return "redirect:/category";
     }
+
+    @PostMapping("/create")
+    public String create(@Valid @ModelAttribute Category formCategory, BindingResult bindingResult, Model model){
+        if(bindingResult.hasErrors()){
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "/categories/index";
+        }
+        categoryService.create(formCategory);
+        return "redirect:/category";
+    }
 }

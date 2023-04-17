@@ -32,4 +32,10 @@ public class CategoryService {
         categoryToUpdate.setName(formCategory.getName());
         categoryRepository.save(categoryToUpdate);
     }
+
+    public void create(Category formCategory){
+        Category cat = new Category();
+        cat.setName(formCategory.getName());
+        categoryRepository.save(cat);
+    }
 }

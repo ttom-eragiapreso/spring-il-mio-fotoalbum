@@ -61,7 +61,7 @@
     <hr>
     <div class="mb-3 form-check" th:each="cat : ${categories}">
       <input type="checkbox" class="form-check-input" th:id="|cat_${cat.id}|"
-             th:checked="*{visible}" th:field="${categories}"
+             th:checked="*{visible}" th:field="*{categories}"
              th:value="${cat.id}">
       <label class="form-check-label" th:for="|cat_${cat.id}|" th:text="${cat.name}"></label>
     </div>

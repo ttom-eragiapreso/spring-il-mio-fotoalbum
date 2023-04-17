@@ -85,12 +85,12 @@ public class PhotoController {
     @GetMapping("/create")
     public String create(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("photo", new Photo());
+        model.addAttribute("photo", new FileDTO());
         return "/photo/create-edit";
     }
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute Photo formPhoto, BindingResult bindingResult){
+    public String store(@Valid @ModelAttribute FileDTO formPhoto, BindingResult bindingResult) throws IOException {
         if(bindingResult.hasErrors()) return "/photo/create-edit";
 
        Photo newPhoto = photoService.storePhoto(formPhoto);
