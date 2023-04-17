@@ -1,5 +1,6 @@
 package org.photoalbum.photoalbum.service;
 
+import org.photoalbum.photoalbum.dto.FileDTO;
 import org.photoalbum.photoalbum.exception.PhotoNotFoundException;
 import org.photoalbum.photoalbum.model.Category;
 import org.photoalbum.photoalbum.model.Photo;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +41,7 @@ public class PhotoService {
         photoRepository.delete(photoToDelete);
     }
 
-    public Photo updatePhoto(Photo formPhoto, Integer id) throws PhotoNotFoundException{
+    public Photo updatePhoto(FileDTO formPhoto, Integer id) throws PhotoNotFoundException, IOException {
         Photo photoToUpdate = getById(id);
 
         photoToUpdate.setVisible(formPhoto.getVisible());
@@ -47,6 +49,7 @@ public class PhotoService {
         photoToUpdate.setDescription(formPhoto.getDescription());
         photoToUpdate.setCategories(formPhoto.getCategories());
         photoToUpdate.setUrl(formPhoto.getUrl());
+        photoToUpdate.setFile(formPhoto.getMultipartFile().getBytes());
 
        return photoRepository.save(photoToUpdate);
     }

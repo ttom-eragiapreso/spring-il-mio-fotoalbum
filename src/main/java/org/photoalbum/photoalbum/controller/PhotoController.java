@@ -1,6 +1,7 @@
 package org.photoalbum.photoalbum.controller;
 
 import jakarta.validation.Valid;
+import org.photoalbum.photoalbum.dto.FileDTO;
 import org.photoalbum.photoalbum.exception.PhotoNotFoundException;
 import org.photoalbum.photoalbum.model.Photo;
 import org.photoalbum.photoalbum.service.CategoryService;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -57,8 +59,9 @@ public class PhotoController {
 
         try {
             Photo photoToEdit = photoService.getById(id);
+            FileDTO fileDTO = new FileDTO(photoToEdit);
             model.addAttribute("categories", categoryService.getAllCategories());
-            model.addAttribute("photo", photoToEdit);
+            model.addAttribute("photo", fileDTO);
             return "/photo/create-edit";
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -66,7 +69,7 @@ public class PhotoController {
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@PathVariable Integer id, @Valid @ModelAttribute Photo photo, BindingResult bindingResult){
+    public String update(@PathVariable Integer id, @ModelAttribute(name = "photo") FileDTO photo, BindingResult bindingResult){
 
         if(bindingResult.hasErrors()) return "/photo/create-edit";
 
@@ -75,6 +78,8 @@ public class PhotoController {
             return "redirect:/photo";
         } catch (PhotoNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     @GetMapping("/create")

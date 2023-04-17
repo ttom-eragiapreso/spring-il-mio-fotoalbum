@@ -13,11 +13,11 @@ public class UserMessage {
     private Integer Id;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Content cannot be empty")
     private String content;
 
     public Integer getId() {

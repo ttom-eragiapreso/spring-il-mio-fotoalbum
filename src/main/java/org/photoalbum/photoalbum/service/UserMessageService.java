@@ -26,13 +26,13 @@ public class UserMessageService {
         return userMessageRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public void sendMessage(UserMessage formUserMessage){
+    public UserMessage sendMessage(UserMessage formUserMessage){
         UserMessage userMessageToSave = new UserMessage();
 
         userMessageToSave.setContent(formUserMessage.getContent());
         userMessageToSave.setEmail(formUserMessage.getEmail());
 
-        userMessageRepository.save(userMessageToSave);
+        return userMessageRepository.save(userMessageToSave);
     }
 
     public void deleteMessage(Integer id){

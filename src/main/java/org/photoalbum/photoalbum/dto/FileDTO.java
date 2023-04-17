@@ -1,42 +1,47 @@
-package org.photoalbum.photoalbum.model;
+package org.photoalbum.photoalbum.dto;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import jakarta.persistence.OneToOne;
+import org.photoalbum.photoalbum.model.Category;
+import org.photoalbum.photoalbum.model.Photo;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Entity
-@Table(name = "photos")
-public class Photo {
+public class FileDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private MultipartFile multipartFile;
+
+
     private Integer id;
-
-    @NotNull
-    @NotEmpty
     private String title;
+
     private String description;
 
-    @NotNull
-    @NotEmpty
     private String url;
 
-    @Column(columnDefinition = "boolean default true")
     private Boolean visible;
 
-    @ManyToMany
     private List<Category> categories;
 
-    @Lob
-    @Column(length = 16777215)
-    private byte[] file;
+    public FileDTO(Photo photo) {
+        this.id = photo.getId();
+        this.title = photo.getTitle();
+        this.description = photo.getDescription();
+        this.url = photo.getUrl();
+        this.visible = photo.getVisible();
+        this.categories = photo.getCategories();
+    }
+
+    public FileDTO() {
+    }
+
+    public MultipartFile getMultipartFile() {
+        return multipartFile;
+    }
+
+    public void setMultipartFile(MultipartFile multipartFile) {
+        this.multipartFile = multipartFile;
+    }
 
     public Integer getId() {
         return id;
@@ -84,13 +89,5 @@ public class Photo {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
-    }
-
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
     }
 }

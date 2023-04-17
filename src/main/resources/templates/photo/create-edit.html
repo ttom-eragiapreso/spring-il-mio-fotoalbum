@@ -7,19 +7,19 @@
 <body>
 <th:block th:replace="~{fragments/fragments :: navbar(${keyword}, false)}"></th:block>
 
-<div class="container"
+<div class="container mb-3"
      th:with="formAction = ${photo.id == null ? '/photo/create' : '/photo/edit/' + photo.id}">
   <form
           th:action="${formAction}"
           method="post"
           th:object="${photo}"
+          enctype="multipart/form-data"
   >
-<!--    <ul th:if="${#fields.hasErrors()}">
-      <li th:each="error : ${#fields.allErrors()}" th:text="${error}"></li>
-    </ul>-->
+    <input type="hidden" th:field="*{id}">
     <div class="mb-3">
       <label for="title" class="form-label">Photo Title</label>
-      <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
+      <input type="text" class="form-control" id="title" th:field="*{title}"
+             th:errorClass="is-invalid">
       <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
         <ul>
           <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
@@ -44,6 +44,15 @@
         </ul>
       </div>
     </div>
+    <div class="mb-3">
+      <label for="img" class="form-label">Photo File</label>
+      <input type="file" class="form-control" id="img" th:field="*{multipartFile}" th:errorClass="is-invalid">
+      <div th:if="${#fields.hasErrors('multipartFile')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('multipartFile')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="isVisible"
              th:checked="*{visible}" th:field="*{visible}">
@@ -52,7 +61,7 @@
     <hr>
     <div class="mb-3 form-check" th:each="cat : ${categories}">
       <input type="checkbox" class="form-check-input" th:id="|cat_${cat.id}|"
-             th:checked="*{visible}" th:field="${photo.categories}"
+             th:checked="*{visible}" th:field="${categories}"
              th:value="${cat.id}">
       <label class="form-check-label" th:for="|cat_${cat.id}|" th:text="${cat.name}"></label>
     </div>
