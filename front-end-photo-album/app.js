@@ -38,10 +38,6 @@ createApp({
         });
     },
 
-    photoToggle(photo) {
-      return photo.file ? "http://localhost:8080/files/" + photo.id : photo.url;
-    },
-
     classSwitch(cat) {
       switch (cat.name) {
         case "Roma":

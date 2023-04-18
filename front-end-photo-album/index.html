@@ -70,7 +70,7 @@
             :key="photo.id">
             <div class="card">
               <img
-                :src="photoToggle(photo)"
+                :src="'http://localhost:8080/files/' + photo.id"
                 :alt="photo.title"
                 class="card-img-top" />
               <div class="card-body">

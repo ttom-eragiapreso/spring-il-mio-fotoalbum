@@ -20,7 +20,6 @@ public class Photo {
     @NotEmpty
     private String title;
     private String description;
-
     private String url;
 
     @Column(columnDefinition = "boolean default true")
